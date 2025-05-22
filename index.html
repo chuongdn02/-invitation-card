@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thiệp Mời Tốt Nghiệp</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Dancing+Script&family=Merriweather&family=Quicksand&family=Pacifico&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Quicksand', sans-serif;
+            background: radial-gradient(#0f2027, #203a43, #2c5364);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .card {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 40px 30px;
+            border-radius: 20px;
+            max-width: 700px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .countdown {
+            margin-top: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #b03a2e;
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
+            color: #f1c40f;
+            margin-bottom: 10px;
+        }
+
+        .details {
+            font-family: 'Merriweather', serif;
+            font-size: 1.1rem;
+            color: #ecf0f1;
+            margin: 20px 0;
+        }
+
+        .guest-name {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.8rem;
+            color: #e67e22;
+        }
+
+        input {
+            padding: 12px;
+            width: 70%;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .name-highlight {
+            font-size: 1.8rem;
+            background: linear-gradient(270deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1, #fbc2eb, #fad0c4, #ff9a9e);
+            background-size: 800% 800%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientMove 5s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .btn {
+            padding: 14px 30px;
+            background: linear-gradient(45deg, #e67e22, #f39c12);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(255, 165, 0, 0.4);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .btn:hover {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            box-shadow: 0 6px 20px rgba(255, 165, 0, 0.6);
+            transform: scale(1.05);
+        }
+
+        /* Hiệu ứng lấp lánh nhẹ */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 165, 0, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(255, 165, 0, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 165, 0, 0);
+            }
+        }
+
+
+        #thankYou {
+            margin-top: 20px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #f1c40f;
+            display: none;
+        }
+
+        iframe {
+            width: 100%;
+            height: 300px;
+            border: none;
+            border-radius: 12px;
+            margin-top: 10px;
+        }
+
+
+        .location-note {
+            margin-top: 30px;
+            font-size: 1rem;
+            color: #bdc3c7;
+            font-style: italic;
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 30px 20px;
+            }
+
+            input {
+                width: 100%;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .guest-name {
+                font-size: 1.5rem;
+            }
+
+            .event-time {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 15px;
+                margin-top: 15px;
+                padding: 15px 30px;
+                border: 2px solid #f1c40f;
+                border-radius: 50px;
+                background: rgba(241, 196, 15, 0.1);
+                box-shadow: 0 0 15px 2px rgba(241, 196, 15, 0.4);
+                font-family: 'Great Vibes', cursive;
+                color: #f1c40f;
+                font-weight: 600;
+                font-size: 1.6rem;
+                user-select: none;
+            }
+
+            .event-time>div:first-child {
+                font-size: 2.4rem;
+                line-height: 1;
+            }
+
+            .event-time .time {
+                font-weight: 700;
+            }
+
+            .event-time .date {
+                font-size: 1.2rem;
+                font-family: 'Merriweather', serif;
+                font-weight: 400;
+                margin-top: -4px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="fireworksCanvas"></canvas>
+
+    <div class="container" id="step1">
+        <div class="card">
+            <h1>🎓 Thiệp Mời Tốt Nghiệp</h1>
+            <p class="details">Xin mời nhập tên của bạn để nhận thiệp mời đặc biệt.</p>
+            <input type="text" id="guestName" placeholder="Nhập tên của bạn" />
+            <br />
+            <button class="btn" onclick="showInvitation()">Xem Thiệp Mời</button>
+        </div>
+    </div>
+
+    <div class="container" id="step2" style="display: none;">
+        <div class="card">
+            <h1>🎓 Lễ Tốt Nghiệp 🎓</h1>
+            <p class="details">
+                Trân trọng kính mời<br />
+                <span class="guest-name" id="guestDisplayName"></span><br />
+                đến tham dự lễ tốt nghiệp của<br />
+                <strong class="name-highlight">Nguyễn Văn Chương</strong>
+
+            <div class="event-time">
+                <div>⏰</div>
+                <div>
+                    <div class="time">10:00 sáng</div>
+                    <div class="date">31 tháng 5, 2025</div>
+                </div>
+            </div><br /><br />
+            </p>
+
+            <button class="btn" onclick="confirm()">🎉 Xác nhận tham dự</button>
+            <div id="thankYou">
+                <div class="countdown" id="countdown">⏳ Đang tải thời gian còn lại...</div>
+                🎉 Cảm ơn bạn đã xác nhận! Hẹn gặp bạn tại buổi lễ!
+            </div>
+            <div id="countdown"></div>
+            <!-- Ghi chú địa điểm -->
+            <div class="location-note">📍 Hội trường Đại học Sư Phạm Kỹ Thuật cơ sở 2 nằm tại vị trí bên dưới:</div>
+
+            <!-- Bản đồ Google Maps -->
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3833.672010776727!2d108.24774771532514!3d15.974139178877792!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31421168cbea003d%3A0xabbc1bca6654719f!2zVHLGsOG7nW5nIMSQ4bqhaSBTw7RuZyBQxINuYXBow6puIEtow6ksIMSQ4bqhaIFThu6ljIEtow6xuaA!5e0!3m2!1svi!2s!4v1700000000000!5m2!1svi!2s"
+                allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+
+
+        </div>
+    </div>
+
+    <script>
+        function showInvitation() {
+            const name = document.getElementById("guestName").value.trim();
+            if (!name) {
+                alert("Vui lòng nhập tên!");
+                return;
+            }
+            document.getElementById("guestDisplayName").textContent = name;
+            document.getElementById("step1").style.display = "none";
+            document.getElementById("step2").style.display = "flex";
+        }
+        const countdownEl = document.getElementById('countdown');
+        const graduationDate = new Date("May 31, 2025 10:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const distance = graduationDate - now;
+            if (distance < 0) {
+                countdownEl.innerHTML = "🎉 Đã đến ngày tốt nghiệp!";
+                return;
+            }
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            countdownEl.innerHTML = `⏳ Còn lại: ${days} ngày ${hours} giờ ${minutes} phút ${seconds} giây`;
+        }, 1000);
+
+        function confirm() {
+            document.querySelector(".btn").style.display = "none";
+            document.getElementById("thankYou").style.display = "block";
+            launchFireworks();
+        }
+
+        // ---------------- FIREWORKS ------------------
+        const canvas = document.getElementById("fireworksCanvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let fireworks = [];
+
+        class Firework {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.particles = [];
+                for (let i = 0; i < 100; i++) {
+                    const angle = Math.random() * 2 * Math.PI;
+                    const speed = Math.random() * 4 + 1;
+                    this.particles.push({
+                        x: x,
+                        y: y,
+                        vx: Math.cos(angle) * speed,
+                        vy: Math.sin(angle) * speed,
+                        alpha: 1,
+                        color: `hsl(${Math.random() * 360}, 100%, 60%)`
+                    });
+                }
+            }
+
+            update() {
+                this.particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.05; // gravity
+                    p.alpha -= 0.01;
+                });
+                this.particles = this.particles.filter(p => p.alpha > 0);
+            }
+
+            draw(ctx) {
+                this.particles.forEach(p => {
+                    ctx.globalAlpha = p.alpha;
+                    ctx.fillStyle = p.color;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+                ctx.globalAlpha = 1;
+            }
+        }
+
+        function launchFireworks() {
+            const interval = setInterval(() => {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height / 2;
+                fireworks.push(new Firework(x, y));
+            }, 300);
+
+            setTimeout(() => clearInterval(interval), 5000);
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            fireworks.forEach(firework => {
+                firework.update();
+                firework.draw(ctx);
+            });
+            fireworks = fireworks.filter(f => f.particles.length > 0);
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+        window.addEventListener("resize", () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+
+
+
+
+</body>
+
+</html>
